@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroMarket Rwanda | RDB Certified Farmers</title>
+    <meta
+      name="description"
+      content="AgroMarket Rwanda connects verified RDB-certified farmers with buyers seeking fresh agricultural products."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="container nav-wrap">
+        <div class="brand">
+          <span class="brand-mark">A</span>
+          <span>AgroMarket Rwanda</span>
+        </div>
+        <nav class="nav">
+          <a href="#market">Market</a>
+          <a href="#farmers">Farmers</a>
+          <a href="#register">Register</a>
+          <a href="#admin">Admin</a>
+        </nav>
+        <button class="primary-btn">Join as Farmer</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-grid">
+          <div class="hero-copy">
+            <span class="eyebrow">RDB Certified Marketplace</span>
+            <h1>Connecting Rwanda's trusted farmers to buyers.</h1>
+            <p>
+              AgroMarket Rwanda helps certified farmers sell agricultural goods
+              across districts while giving buyers confidence through verified
+              seller records and transparent trade.
+            </p>
+            <div class="hero-actions">
+              <button class="primary-btn large">Sell My Produce</button>
+              <button class="secondary-btn large">Browse Market</button>
+            </div>
+            <ul class="hero-points">
+              <li>Verified RDB farmers only</li>
+              <li>Fresh produce across districts</li>
+              <li>Trusted local buying and selling</li>
+            </ul>
+          </div>
+
+          <div class="hero-card">
+            <div class="card-head">
+              <span class="success-pill">Verified Sellers</span>
+              <span class="mini-stat">+24% this month</span>
+            </div>
+            <div class="market-figure">
+              <strong id="dashboardTotalFarmers">246</strong>
+              <span>Active farmers</span>
+            </div>
+            <div class="mini-grid">
+              <div>
+                <small>Verified</small>
+                <strong id="dashboardVerifiedFarmers">189</strong>
+              </div>
+              <div>
+                <small>Products</small>
+                <strong id="dashboardProductsListed">1,375</strong>
+              </div>
+              <div>
+                <small>Daily orders</small>
+                <strong id="dashboardOrdersToday">86</strong>
+              </div>
+              <div>
+                <small>Districts</small>
+                <strong id="dashboardDistrictsCovered">12</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="stats-bar">
+        <div class="container stats-grid">
+          <div>
+            <strong id="statFarmers">246</strong>
+            <span>Farmers</span>
+          </div>
+          <div>
+            <strong id="statVerified">189</strong>
+            <span>Verified</span>
+          </div>
+          <div>
+            <strong id="statProducts">1,375</strong>
+            <span>Listed products</span>
+          </div>
+          <div>
+            <strong id="statOrders">86</strong>
+            <span>Orders today</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="market">
+        <div class="container section-header">
+          <div>
+            <span class="eyebrow dark">Marketplace</span>
+            <h2>Fresh products from verified farmers</h2>
+          </div>
+          <button class="secondary-btn">View all products</button>
+        </div>
+
+        <div class="container product-grid" id="productGrid"></div>
+      </section>
+
+      <section class="section muted" id="farmers">
+        <div class="container section-header">
+          <div>
+            <span class="eyebrow dark">Certified sellers</span>
+            <h2>Trusted farmers across Rwanda</h2>
+          </div>
+        </div>
+
+        <div class="container farmer-grid" id="farmerGrid"></div>
+      </section>
+
+      <section class="section register-section" id="register">
+        <div class="container register-grid">
+          <div class="register-copy">
+            <span class="eyebrow dark">Farmer onboarding</span>
+            <h2>Register as an RDB-certified seller</h2>
+            <p>
+              Join the AgroMarket Rwanda platform and be reviewed by our admin
+              team before your products become available to buyers.
+            </p>
+            <ul>
+              <li>Submit your RDB certificate</li>
+              <li>Verify district and product information</li>
+              <li>Receive marketplace approval</li>
+            </ul>
+          </div>
+
+          <form class="register-form" id="farmerSignupForm">
+            <label>
+              Farmer name
+              <input type="text" id="farmerName" name="farmerName" placeholder="e.g., Uwimana Agribusiness" required />
+            </label>
+            <label>
+              District
+              <input type="text" id="district" name="district" placeholder="e.g., Gasabo" required />
+            </label>
+            <label>
+              RDB Certificate Number
+              <input type="text" id="certificateNumber" name="certificateNumber" placeholder="e.g., RDB-2024-0102" required />
+            </label>
+            <label>
+              Crop / Farming Type
+              <input type="text" id="cropType" name="cropType" placeholder="e.g., Vegetables and maize" />
+            </label>
+            <button type="submit" class="primary-btn form-btn">Submit registration</button>
+            <div id="registrationMessage" class="message-box"></div>
+          </form>
+        </div>
+      </section>
+
+      <section class="section admin-section" id="admin">
+        <div class="container admin-grid">
+          <div class="admin-panel">
+            <span class="eyebrow dark">Admin verification</span>
+            <h2>Check RDB certificate status</h2>
+            <form id="certificateForm">
+              <div class="inline-form">
+                <input type="text" id="certLookup" placeholder="Enter RDB certificate number" />
+                <button type="submit" class="primary-btn">Verify</button>
+              </div>
+            </form>
+            <div id="verificationResult" class="message-box info"></div>
+          </div>
+
+          <div class="admin-card">
+            <h3>Pending review</h3>
+            <ul class="pending-list">
+              <li><span>Aline Farm</span><span>Gasabo</span></li>
+              <li><span>Jungle Fresh</span><span>Nyagatare</span></li>
+              <li><span>Rwanda Green Fields</span><span>Rubavu</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer-wrap">
+        <div>
+          <strong>AgroMarket Rwanda</strong>
+          <p>Built for verified farmers and trusted food trade.</p>
+        </div>
+        <p>RDB-compatible marketplace MVP</p>
+      </div>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
