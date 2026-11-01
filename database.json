@@ -1,0 +1,69 @@
+{
+  "farmers": [
+    {
+      "id": 1,
+      "name": "Aline Farm",
+      "district": "Gasabo",
+      "sector": "Kacyiru",
+      "rdbCert": "RDB-2024-0102",
+      "cropType": "Crops",
+      "status": "verified"
+    },
+    {
+      "id": 2,
+      "name": "Green Harvest Co.",
+      "district": "Kicukiro",
+      "sector": "Niboye",
+      "rdbCert": "RDB-2024-0217",
+      "cropType": "Vegetables",
+      "status": "verified"
+    },
+    {
+      "id": 3,
+      "name": "Lake Valley Farms",
+      "district": "Rubavu",
+      "sector": "Gisenyi",
+      "rdbCert": "RDB-2024-0110",
+      "cropType": "Grains",
+      "status": "verified"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "farmerId": 1,
+      "name": "Irish Potatoes",
+      "price": 600,
+      "unit": "kg",
+      "quantity": "1,200 kg",
+      "category": "Crops"
+    },
+    {
+      "id": 2,
+      "farmerId": 2,
+      "name": "Fresh Tomatoes",
+      "price": 450,
+      "unit": "kg",
+      "quantity": "800 kg",
+      "category": "Vegetables"
+    },
+    {
+      "id": 3,
+      "farmerId": 3,
+      "name": "Maize Flour",
+      "price": 950,
+      "unit": "bag",
+      "quantity": "400 bags",
+      "category": "Grains"
+    },
+    {
+      "id": 4,
+      "farmerId": 1,
+      "name": "Bananas",
+      "price": 350,
+      "unit": "bunch",
+      "quantity": "200 bunches",
+      "category": "Fruit"
+    }
+  ]
+}
