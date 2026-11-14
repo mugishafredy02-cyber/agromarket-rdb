@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="rw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AgroMarket Rwanda | Babo Enterprise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#16231a;--green:#1e5a34;--leaf:#2f7d4a;--sun:#f0b323;--bg:#f6f7f1;--card:#fff;--line:#dfe3d6;--mute:#5b6b5f;--red:#b3261e}
+*{box-sizing:border-box}body{margin:0;font-family:'Bricolage Grotesque',system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.5}
+a{color:inherit}header{background:var(--green);color:#fff;position:sticky;top:0;z-index:5}
+.bar{max-width:1080px;margin:auto;padding:12px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:1.2rem;margin-right:auto}nav a{margin-right:14px;text-decoration:none;opacity:.9}nav a:hover{opacity:1;text-decoration:underline}
+button,.btn{font:inherit;cursor:pointer;border:0;border-radius:8px;padding:10px 16px;font-weight:600}
+.pri{background:var(--sun);color:var(--ink)}.pri:hover{filter:brightness(.95)}.sec{background:var(--green);color:#fff}.ghost{background:transparent;color:#fff;border:1px solid #ffffff80}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+main{max-width:1080px;margin:auto;padding:0 16px 48px}
+.hero{padding:44px 0 24px}.hero h1{font-size:clamp(2rem,6vw,3.6rem);line-height:1.05;margin:0 0 12px;font-weight:800;max-width:15ch}
+.hero p{color:var(--mute);max-width:52ch;margin:0 0 20px;font-size:1.1rem}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.stats div{padding:16px;border-right:1px solid var(--line)}.stats div:last-child{border:0}.stats b{display:block;font-size:1.6rem}.stats span{color:var(--mute);font-size:.9rem}
+h2{font-size:1.6rem;margin:40px 0 6px}.sub{color:var(--mute);margin:0 0 16px}
+.tools{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+input,select{font:inherit;padding:10px 12px;border:1px solid var(--line);border-radius:8px;background:#fff;width:100%}
+.tools input{flex:2;min-width:200px;width:auto}.tools select{flex:1;min-width:140px;width:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:4px 0 0;font-size:1.2rem}.tag{font-size:.8rem;color:var(--green);font-weight:600}.mute{color:var(--mute);font-size:.9rem}
+.price{font-size:1.3rem;font-weight:800;color:var(--green)}.row{display:flex;justify-content:space-between;align-items:end;margin-top:auto;padding-top:10px;border-top:1px solid var(--line)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;max-width:640px}
+form{display:grid;gap:12px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}label{font-size:.9rem;font-weight:600;display:grid;gap:4px}
+.tabs{display:flex;gap:8px;margin-bottom:12px}.tabs button{background:#e9ecdf}.tabs .on{background:var(--green);color:#fff}
+.hidden{display:none!important}.empty{grid-column:1/-1;padding:28px;text-align:center;color:var(--mute);border:1px dashed var(--line);border-radius:12px}
+.modal{position:fixed;inset:0;background:#000a;display:flex;align-items:center;justify-content:center;padding:16px;z-index:20}
+.modal .panel{width:100%;max-width:420px}.note{background:#fff8e1;border:1px solid #f0d78a;border-radius:8px;padding:10px;font-size:.9rem}
+.card img{width:100%;height:150px;object-fit:cover;border-radius:8px;background:#e9ecdf}
+.ph{height:150px;border-radius:8px;background:#e9ecdf;display:grid;place-items:center;font-size:3.2rem}
+.paid{color:var(--green);font-weight:600}.wait{color:#9a6b00;font-weight:600}
+table{width:100%;border-collapse:collapse;font-size:.92rem}td,th{text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+#toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:10px;z-index:30;max-width:90vw}
+#toast.err{background:var(--red)}.del{background:none;color:var(--red);padding:4px 8px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="bar">
+  <span class="logo">🌾 AgroMarket Rwanda</span>
+  <nav><a href="#isoko">Isoko</a><a href="#konti">Konti</a><a href="#umusaruro" id="navAdd" class="hidden">Shyiraho umusaruro</a></nav>
+  <button class="ghost hidden" id="logoutBtn" onclick="logout()">Sohoka</button>
+</div></header>
+
+<main>
+<section class="hero">
+  <h1>Uhuza abahinzi n'isoko ryo mu Rwanda</h1>
+  <p>Reba umusaruro uriho, ugure ku buryo butaziguye ku muhinzi. Nta bahuza, igiciro kiragaragara.</p>
+  <div class="stats" aria-live="polite">
+    <div><b id="sFarmers">–</b><span>Abahinzi biyandikishije</span></div>
+    <div><b id="sTypes">–</b><span>Ubwoko bw'umusaruro</span></div>
+    <div><b id="sKg">–</b><span>Ingano yose (Kg)</span></div>
+    <div><b id="sValue">–</b><span>Agaciro (RWF)</span></div>
+  </div>
+</section>
+
+<section id="isoko">
+  <h2>Isoko ry'umusaruro</h2><p class="sub">Shakisha ku izina, akarere cyangwa umuhinzi.</p>
+  <div class="tools">
+    <input id="search" type="search" placeholder="Shakisha: ibirayi, Musanze…" aria-label="Shakisha" oninput="debounceLoad()">
+    <select id="cat" onchange="loadProduce()" aria-label="Ikategori">
+      <option value="">Ibyose</option><option>Ibirayi</option><option>Ibigori</option><option>Imboga</option><option>Ibishyimbo</option><option>Imbuto</option><option>Ibindi</option>
+    </select>
+  </div>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="konti">
+  <h2>Konti y'umuhinzi</h2><p class="sub">Iyandikishe cyangwa winjire kugira ngo ushyireho umusaruro wawe.</p>
+  <div class="panel" id="authPanel">
+    <div class="tabs"><button id="tLogin" class="on" onclick="tab('login')">Injira</button><button id="tReg" onclick="tab('reg')">Iyandikishe</button></div>
+    <form id="loginForm" onsubmit="doLogin(event)">
+      <label>Telefone<input id="lPhone" type="tel" inputmode="numeric" placeholder="0788123456" required></label>
+      <label>Ijambo ry'ibanga<input id="lPass" type="password" required autocomplete="current-password"></label>
+      <button class="sec">Injira</button>
+    </form>
+    <form id="regForm" class="hidden" onsubmit="doRegister(event)">
+      <label>Izina ry'umuhinzi / koperative<input id="rName" required placeholder="Musanze Farmers Coop"></label>
+      <label>Telefone (MoMo)<input id="rPhone" type="tel" inputmode="numeric" placeholder="0788123456" required></label>
+      <div class="two"><label>Akarere<input id="rDist" required placeholder="Musanze"></label><label>Umurenge<input id="rSect" required placeholder="Muhoza"></label></div>
+      <label>RDB / TIN (si ngombwa)<input id="rRdb" placeholder="RDB-2026-XXXXX"></label>
+      <label>Ijambo ry'ibanga (nibura 6)<input id="rPass" type="password" minlength="6" required autocomplete="new-password"></label>
+      <button class="pri">Emeza kwiyandikisha</button>
+    </form>
+  </div>
+  <div id="me" class="hidden">
+    <div class="panel" style="margin-bottom:16px"><b id="meName"></b><p class="mute" style="margin:4px 0 0">Wasinyiye. Shyiraho umusaruro hasi.</p></div>
+  </div>
+</section>
+
+<section id="umusaruro" class="hidden">
+  <h2>Shyiraho umusaruro mushya</h2>
+  <div class="panel"><form onsubmit="addProduce(event)">
+    <div class="two"><label>Izina ry'umusaruro<input id="pName" required placeholder="Ibirayi bya Kinigi"></label>
+    <label>Ikategori<select id="pCat"><option>Ibirayi</option><option>Ibigori</option><option>Imboga</option><option>Ibishyimbo</option><option>Imbuto</option><option>Ibindi</option></select></label></div>
+    <div class="two"><label>Umuhinzi / koperative<input id="pFarmer" required></label><label>Akarere<input id="pDist" required></label></div>
+    <div class="two"><label>Igiciro ku kilo (RWF)<input id="pPrice" type="number" min="1" required></label><label>Ingano (Kg)<input id="pQty" type="number" min="1" required></label></div>
+    <label>Ifoto y'umusaruro (si ngombwa)<input id="pPhoto" type="file" accept="image/*"></label>
+    <button class="sec">Shyira ku isoko</button>
+  </form></div>
+  <h2>Ibyo nashyizeho</h2><div class="grid" id="mine"></div>
+  <h2>Amategeko y'abaguzi</h2><div class="panel" style="max-width:none;overflow-x:auto"><table><thead><tr><th>Umusaruro</th><th>Umuguzi</th><th>Telefone</th><th>Kg</th><th>RWF</th><th>Kwishyura</th></tr></thead><tbody id="orders"></tbody></table></div>
+</section>
+</main>
+
+<div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+  <div class="panel"><div style="display:flex;justify-content:space-between"><h3 id="mTitle" style="margin:0">Gura umusaruro</h3><button class="del" onclick="closeModal()" aria-label="Funga">✕</button></div>
+  <p id="mInfo" class="mute"></p>
+  <form onsubmit="placeOrder(event)">
+    <label>Amazina yawe<input id="bName" required></label>
+    <label>Telefone yawe<input id="bPhone" type="tel" inputmode="numeric" placeholder="0788123456" required></label>
+    <label>Ingano (Kg)<input id="bQty" type="number" min="1" required oninput="calc()"></label>
+    <p><b id="bTotal">0 RWF</b></p>
+    <label>Uko wishyura<select id="bPay"><option value="momo">MTN MoMo (shyiramo umubare w'ibanga kuri telefone yawe)</option><option value="airtel">Airtel Money (shyiramo umubare w'ibanga kuri telefone yawe)</option>
+      <option value="direct">Nzishyura umuhinzi mu ntoki</option></select></label>
+    <div class="note">Umubare w'ibanga wa Mobile Money uwushyira kuri telefone yawe gusa. Urubuga ntiruwusaba.</div>
+    <button class="pri">Ohereza itegeko</button>
+  </form></div>
+</div>
+<div id="toast" class="hidden" role="status"></div>
+
+<script>
+const EMO={Ibirayi:'🥔',Ibigori:'🌽',Imboga:'🍅',Ibishyimbo:'🫘',Imbuto:'🍌',Ibindi:'🌾'};const API='/api';let items=[],cur=null,tk=localStorage.getItem('agro_token'),tm;
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=n=>Number(n).toLocaleString('en-US');
+function toast(m,err){const t=$('toast');t.textContent=m;t.className=err?'err':'';clearTimeout(tm);tm=setTimeout(()=>t.className='hidden',4000)}
+async function api(path,opt={}){
+  const h={'Content-Type':'application/json'};if(tk)h.Authorization='Bearer '+tk;
+  try{const r=await fetch(API+path,{...opt,headers:h});const d=await r.json();
+    if(r.status===401&&tk&&!path.includes('login')){logout();toast('Injira bundi bushya.',1)}return d}
+  catch{return{success:false,message:'Seriveri ntiboneka. Ongera ugerageze.'}}}
+function tab(w){$('loginForm').classList.toggle('hidden',w!=='login');$('regForm').classList.toggle('hidden',w!=='reg');$('tLogin').className=w==='login'?'on':'';$('tReg').className=w==='reg'?'on':''}
+async function loadStats(){const d=await api('/dashboard/stats');if(!d.success)return;const s=d.stats;
+  $('sFarmers').textContent=fmt(s.totalFarmers);$('sTypes').textContent=fmt(s.totalProduceTypes);$('sKg').textContent=fmt(s.totalStockKg);$('sValue').textContent=fmt(s.totalMarketValueRwf)}
+let dt;function debounceLoad(){clearTimeout(dt);dt=setTimeout(loadProduce,300)}
+function card(i,mine){return `<article class="card">${i.hasPhoto?`<img src="/api/produce/${i.id}/photo" alt="${esc(i.name)}" loading="lazy">`:`<div class="ph" aria-hidden="true">${EMO[i.category]||'🌱'}</div>`}<span class="tag">${esc(i.category)} · ${esc(i.district)}</span><h3>${esc(i.name)}</h3><span class="mute">${esc(i.farmer)}</span>
+  <div class="row"><div><div class="price">${fmt(i.price)} RWF<span class="mute">/Kg</span></div><span class="mute">Hari: ${fmt(i.qtyKg)} Kg</span></div>
+  ${mine?`<button class="del" onclick="delProduce(${i.id})">Siba</button>`:`<button class="pri" onclick="openModal(${i.id})">Gura</button>`}</div></article>`}
+async function loadProduce(){
+  const d=await api(`/produce?q=${encodeURIComponent($('search').value)}&category=${encodeURIComponent($('cat').value)}`);
+  if(!d.success){$('grid').innerHTML=`<div class="empty">${esc(d.message)}</div>`;return}
+  items=d.data;$('grid').innerHTML=items.length?items.map(i=>card(i)).join(''):'<div class="empty">Nta musaruro uraboneka. Gerageza irindi jambo, cyangwa ushyireho uwawe.</div>';
+  if(tk)renderMine()}
+function myId(){try{return JSON.parse(atob(tk.split('.')[1])).id}catch{return null}}
+function renderMine(){const m=items.filter(i=>i.user_id===myId());$('mine').innerHTML=m.length?m.map(i=>card(i,1)).join(''):'<div class="empty">Ntacyo urashyiraho.</div>'}
+function setAuth(on,name){['authPanel'].forEach(x=>$(x).classList.toggle('hidden',on));$('me').classList.toggle('hidden',!on);$('umusaruro').classList.toggle('hidden',!on);$('navAdd').classList.toggle('hidden',!on);$('logoutBtn').classList.toggle('hidden',!on);
+  if(on){$('meName').textContent='Muraho, '+(name||localStorage.getItem('agro_name')||'');loadOrders()}}
+function logout(){tk=null;localStorage.removeItem('agro_token');localStorage.removeItem('agro_name');setAuth(false);loadProduce()}
+function session(d){tk=d.token;localStorage.setItem('agro_token',tk);localStorage.setItem('agro_name',d.name||'');setAuth(true,d.name);loadProduce();loadStats()}
+async function doLogin(e){e.preventDefault();const d=await api('/farmers/login',{method:'POST',body:JSON.stringify({phone:$('lPhone').value.trim(),password:$('lPass').value})});
+  d.success?(toast('Mwinjiye neza!'),session(d)):toast(d.message,1)}
+async function doRegister(e){e.preventDefault();const d=await api('/farmers/register',{method:'POST',body:JSON.stringify({farmName:$('rName').value,phone:$('rPhone').value.trim(),district:$('rDist').value,sector:$('rSect').value,rdbCertificate:$('rRdb').value,password:$('rPass').value})});
+  d.success?(toast(d.message),session(d)):toast(d.message,1)}
+function shrink(file){return new Promise(ok=>{if(!file)return ok(null);const img=new Image(),u=URL.createObjectURL(file);
+  img.onload=()=>{const k=Math.min(1,800/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=img.width*k;c.height=img.height*k;
+    c.getContext('2d').drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(u);ok(c.toDataURL('image/jpeg',.75))};img.onerror=()=>ok(null);img.src=u})}
+async function addProduce(e){e.preventDefault();const photo=await shrink($('pPhoto').files[0]);
+  const d=await api('/produce',{method:'POST',body:JSON.stringify({name:$('pName').value,category:$('pCat').value,farmer:$('pFarmer').value,district:$('pDist').value,price:$('pPrice').value,qtyKg:$('pQty').value,photo})});
+  if(d.success){toast(d.message);e.target.reset();loadProduce();loadStats()}else toast(d.message,1)}
+async function delProduce(id){if(!confirm('Wifuza gusiba uyu musaruro?'))return;const d=await api('/produce/'+id,{method:'DELETE'});toast(d.message,!d.success);loadProduce();loadStats()}
+async function loadOrders(){const d=await api('/my-orders');if(!d.success)return;
+  $('orders').innerHTML=d.data.length?d.data.map(o=>`<tr><td>${esc(o.produce_name)}</td><td>${esc(o.buyer_name)}</td><td><a href="tel:${esc(o.buyer_phone)}">${esc(o.buyer_phone)}</a></td><td>${fmt(o.qty_kg)}</td><td>${fmt(o.total)}</td><td class="${o.pay_status==='PAID'?'paid':'wait'}">${{PAID:'Yishyuwe',PENDING:'Itegerejwe',FAILED:'Ntiyishyuwe',DIRECT:'Mu ntoki'}[o.pay_status]||''}</td></tr>`).join(''):'<tr><td colspan="6" class="mute">Nta tegeko riraboneka.</td></tr>'}
+function openModal(id){cur=items.find(i=>i.id===id);if(!cur)return;$('mTitle').textContent=cur.name;$('mInfo').textContent=`${fmt(cur.price)} RWF/Kg · Hari ${fmt(cur.qtyKg)} Kg · ${cur.farmer}`;$('bQty').max=cur.qtyKg;$('bQty').value='';$('bTotal').textContent='0 RWF';$('modal').classList.remove('hidden');$('bName').focus()}
+function closeModal(){$('modal').classList.add('hidden')}
+function calc(){$('bTotal').textContent=fmt((parseInt($('bQty').value)||0)*(cur?cur.price:0))+' RWF'}
+async function placeOrder(e){e.preventDefault();
+  const d=await api('/orders',{method:'POST',body:JSON.stringify({produceId:cur.id,qtyKg:$('bQty').value,buyerName:$('bName').value,buyerPhone:$('bPhone').value.trim(),payMethod:$('bPay').value})});
+  if(!d.success)return toast(d.message,1);closeModal();toast(d.message);loadProduce();loadStats();
+  if(d.payment==='prompt')pollPay(d.order.id,d.ref,0)}
+async function pollPay(id,ref,n){if(n>30)return toast('Ntitwabonye igisubizo. Reba niba wishyuye, cyangwa ongera ugerageze.',1);
+  await new Promise(r=>setTimeout(r,4000));const d=await api(`/orders/${id}/status?ref=${ref}`);
+  if(d.status==='PAID')return toast('✅ Kwishyura byakiriwe. Urakoze!');
+  if(d.status==='FAILED'){loadProduce();return toast('Kwishyura ntibyagenze neza.',1)}pollPay(id,ref,n+1)}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+if(tk){setAuth(true)}loadStats();loadProduce();
+</script>
+</body>
+</html>
